@@ -1,8 +1,9 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model, ObjectId } from 'mongoose'
 
 interface user {
   username: string
   password: string
+  likedPosts: ObjectId[]
 }
 
 const userSchema = new Schema<user>(
@@ -16,6 +17,10 @@ const userSchema = new Schema<user>(
     password: {
       type: String,
       required: true,
+    },
+    likedPosts: {
+      type: [],
+      default: [],
     },
   },
   { timestamps: true }

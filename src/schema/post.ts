@@ -10,6 +10,7 @@ interface post {
   usedProducts: ObjectId[]
   title: string
   tags: string[]
+  deleted: boolean
 }
 
 const postSchema = new Schema<post>(
@@ -38,6 +39,10 @@ const postSchema = new Schema<post>(
     },
     tags: {
       type: [],
+    },
+    deleted: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

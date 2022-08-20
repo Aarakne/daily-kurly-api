@@ -35,8 +35,6 @@
     "noImplicitAny": true /* Enable error reporting for expressions and declarations with an implied 'any' type. */,
     "strictNullChecks": true /* When type checking, take into account 'null' and 'undefined'. */,
     "strictFunctionTypes": true /* When assigning functions, check to ensure parameters and the return values are subtype-compatible. */,
-    "noUnusedLocals": true /* Enable error reporting when local variables aren't read. */,
-    "noUnusedParameters": true /* Raise an error when a function parameter isn't read. */,
 
     /* Completeness */
     "skipDefaultLibCheck": true /* Skip type checking .d.ts files that are included with TypeScript. */,

@@ -1,4 +1,5 @@
 import type { Response } from 'express'
+import { Types } from 'mongoose'
 import type { status, statusMsg } from 'libType'
 import crypto from 'crypto'
 
@@ -13,14 +14,16 @@ const statusToMsg: Record<status, statusMsg> = {
   500: 'server error',
 }
 
-export const response = (
-  res: Response,
-  statusCode: status,
-  payload?: Record<string, string | object[] | number | undefined>
-) => {
+export const response = (res: Response, statusCode: status, payload?: any) => {
   res.status(statusCode).json({ status: statusToMsg[statusCode], ...payload })
 }
 
 export const makeHash = (data: string, algorithm: string = 'sha512') => {
   return crypto.createHash(algorithm).update(data).digest('hex')
+}
+
+export const checkIfObjectId = (res: Response, objectId: string) => {
+  if (!Types.ObjectId.isValid(objectId)) {
+    return response(res, 400, { status: 'invalid ObjectId' })
+  }
 }
