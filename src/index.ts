@@ -1,5 +1,5 @@
 import http from 'http'
-import connectMongoDB from './lib/dbConnection'
+import connectMongoDB from './lib/db.helper'
 import init from './app'
 
 const port = process.env.PORT || 3000
