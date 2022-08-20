@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express'
-import response from '../../lib/response'
+import { response } from '../../lib/utils'
 
 const healthCheck = (_: Request, res: Response, next: NextFunction) => {
   try {

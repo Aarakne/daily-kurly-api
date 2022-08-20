@@ -1,1 +1,1 @@
-module 'constant' {}
+declare module 'constantType' {}
