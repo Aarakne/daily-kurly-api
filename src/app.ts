@@ -1,11 +1,13 @@
-import express, { Request, Response, NextFunction } from 'express'
+import express from 'express'
+import type { Request, Response, NextFunction } from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
 import cookieParser from 'cookie-parser'
 import mongoSanitize from 'express-mongo-sanitize'
-import createError, { HttpError } from 'http-errors'
-import apiRouter from './routes/index'
-import { CORS_ALLOWED } from './constants/index'
+import createError from 'http-errors'
+import type { HttpError } from 'http-errors'
+import apiRouter from './route/index'
+import { CORS_ALLOWED } from './constant/index'
 
 const init = () => {
   const app = express()

@@ -10,6 +10,12 @@
     "types": [
       "node"
     ] /* Specify type package names to be included without being referenced in a source file. */,
+    "baseUrl": "./" /* Specify the base directory to resolve non-relative module names. */,
+    "paths": {
+      "constantType": ["src/type/constant"],
+      "libType": ["src/type/lib"],
+      "routeType": ["src/type/route"]
+    } /* Specify a set of entries that re-map imports to additional lookup locations. */,
     "resolveJsonModule": true /* Enable importing .json files. */,
 
     /* Emit */
@@ -34,7 +40,7 @@
 
     /* Completeness */
     "skipDefaultLibCheck": true /* Skip type checking .d.ts files that are included with TypeScript. */,
-    "skipLibCheck": true /* Skip type checking all .d.ts files. */
+    "skipLibCheck": false /* Skip type checking all .d.ts files. */
   },
   "exclude": ["node_modules", "dist"]
 }

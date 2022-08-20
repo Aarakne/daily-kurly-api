@@ -1,8 +1,9 @@
-import { Request, Response, NextFunction } from 'express'
+import type { Request, Response, NextFunction } from 'express'
+import response from '../../lib/response'
 
 const healthCheck = (_: Request, res: Response, next: NextFunction) => {
   try {
-    res.status(200).json({ status: 'success' })
+    response(res, 200)
   } catch (err) {
     return next(err)
   }
