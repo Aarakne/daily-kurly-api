@@ -1,7 +1,7 @@
 import express from 'express'
 import multer from 'multer'
 import { ifNotLoggedIn, verifyToken } from '../../lib/auth.helper'
-import { createPost, readPost, updatePost, deletePost } from './post'
+import { createPost, readPost, updatePost, deletePost, readPosts } from './post'
 
 const router = express.Router()
 
@@ -16,5 +16,6 @@ router
     updatePost
   )
   .delete('/:postId', ifNotLoggedIn, verifyToken, deletePost)
+  .get('/list/:page', ifNotLoggedIn, verifyToken, readPosts)
 
 export default router
