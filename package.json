@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "build": "rm -rf dist && tsc",
+    "start": "yarn node -r dotenv/config dist/src/index.js",
     "dev": "nodemon --watch src/**/*.ts --exec ts-node -r dotenv/config src/index.ts"
   },
   "dependencies": {

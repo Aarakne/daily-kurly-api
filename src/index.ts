@@ -2,7 +2,7 @@ import http from 'http'
 import connectMongoDB from './lib/db.helper'
 import init from './app'
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3010
 const app = init()
 
 const serve = async () => {
