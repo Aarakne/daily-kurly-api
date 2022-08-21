@@ -22,7 +22,7 @@ export const createPost = async (req: Request, res: Response) => {
 
     await Promise.all(promises)
 
-    await Post.create({
+    const post = await Post.create({
       writer: username,
       title,
       content: {
@@ -32,6 +32,10 @@ export const createPost = async (req: Request, res: Response) => {
       usedProducts: products.split(','),
       tags: tags ? tags.split(',') : [],
     })
+
+    const user = await User.findOne({ username })
+    user?.posts.push(post._id)
+    await user?.save()
 
     return response(res, 201, { imageCount: imageUrls.length })
   } catch (err) {
