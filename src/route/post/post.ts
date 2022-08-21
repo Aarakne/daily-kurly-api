@@ -118,3 +118,32 @@ export const updatePost = async (req: Request, res: Response) => {
     return response(res, 500)
   }
 }
+
+export const deletePost = async (req: Request, res: Response) => {
+  try {
+    const username = getUserName(req)
+    const postId = req.path.slice(1)
+
+    checkIfObjectId(res, postId)
+
+    const post = await Post.findOne({
+      _id: postId,
+      deleted: false,
+      writer: username,
+    })
+
+    if (!post) {
+      console.error('잘못된 게시글을 요청했습니다.')
+      return response(res, 404)
+    }
+
+    post.deleted = true
+
+    await post.save()
+
+    return response(res, 200)
+  } catch (err) {
+    console.error(err)
+    return response(res, 500)
+  }
+}

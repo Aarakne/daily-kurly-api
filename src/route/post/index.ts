@@ -1,7 +1,7 @@
 import express from 'express'
 import multer from 'multer'
 import { ifNotLoggedIn, verifyToken } from '../../lib/auth.helper'
-import { createPost, readPost, updatePost } from './post'
+import { createPost, readPost, updatePost, deletePost } from './post'
 
 const router = express.Router()
 
@@ -15,5 +15,6 @@ router
     multer().array('images'),
     updatePost
   )
+  .delete('/:postId', ifNotLoggedIn, verifyToken, deletePost)
 
 export default router
