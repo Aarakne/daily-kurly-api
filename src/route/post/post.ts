@@ -3,6 +3,7 @@ import Post from '../../schema/post'
 import User from '../../schema/user'
 import { response, checkIfObjectId } from '../../lib/utils'
 import { getImagePromises, getUserName } from '../../lib/post.helper'
+import { INFINITE_SCROLL_POST_COUNT } from '../../constant/route/post'
 
 // TODO: category 추가, populate 추가
 
@@ -42,7 +43,7 @@ export const createPost = async (req: Request, res: Response) => {
 export const readPost = async (req: Request, res: Response) => {
   try {
     const username = getUserName(req)
-    const postId = req.path.slice(1)
+    const postId = req.params.postId
 
     checkIfObjectId(res, postId)
 
@@ -75,7 +76,7 @@ export const readPost = async (req: Request, res: Response) => {
 export const updatePost = async (req: Request, res: Response) => {
   try {
     const username = getUserName(req)
-    const postId = req.path.slice(1)
+    const postId = req.params.postId
 
     checkIfObjectId(res, postId)
 
@@ -122,7 +123,7 @@ export const updatePost = async (req: Request, res: Response) => {
 export const deletePost = async (req: Request, res: Response) => {
   try {
     const username = getUserName(req)
-    const postId = req.path.slice(1)
+    const postId = req.params.postId
 
     checkIfObjectId(res, postId)
 
@@ -142,6 +143,30 @@ export const deletePost = async (req: Request, res: Response) => {
     await post.save()
 
     return response(res, 200)
+  } catch (err) {
+    console.error(err)
+    return response(res, 500)
+  }
+}
+
+export const readPosts = async (req: Request, res: Response) => {
+  try {
+    const page = parseInt(req.params.page)
+
+    if (isNaN(page)) {
+      console.error('잘못된 page입니다.')
+      return response(res, 400)
+    }
+
+    const posts = await Post.find({ deleted: false })
+      .sort('-createdAt')
+      .select('writer content likeCount title')
+      .skip((page - 1) * INFINITE_SCROLL_POST_COUNT)
+      .limit(INFINITE_SCROLL_POST_COUNT)
+
+    const hasNext = posts.length !== 0
+
+    return response(res, 200, { posts, hasNext })
   } catch (err) {
     console.error(err)
     return response(res, 500)

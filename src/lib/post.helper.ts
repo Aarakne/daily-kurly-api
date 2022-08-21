@@ -24,7 +24,7 @@ export const getImagePromises = (
   for (const file of files) {
     const hash = makeHash(file.buffer.toString('base64'))
     const extension = path.extname(file.originalname)
-    const fileName = `${username}/${hash}.${extension}`
+    const fileName = `${username}/${hash}${extension}`
 
     if (!allowedExtensions.includes(extension)) {
       console.error('잘못된 확장자입니다. 저장하지 않습니다.')
