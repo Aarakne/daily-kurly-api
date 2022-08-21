@@ -15,7 +15,7 @@ const init = () => {
   app.use(cors({ origin: CORS_ALLOWED, credentials: true }))
   app.use(helmet({ contentSecurityPolicy: false }))
   app.use(express.json())
-  app.use(express.urlencoded({ extended: true }))
+  app.use(express.urlencoded({ extended: false }))
   app.use(cookieParser())
   app.use(
     mongoSanitize({
