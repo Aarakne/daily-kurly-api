@@ -5,6 +5,8 @@
   "scripts": {
     "build": "rm -rf dist && tsc",
     "start": "yarn node -r dotenv/config dist/src/index.js",
+    "serve": "pm2 start pm2.config.js",
+    "kill-server": "pm2 kill",
     "dev": "nodemon --watch src/**/*.ts --exec ts-node -r dotenv/config src/index.ts"
   },
   "dependencies": {

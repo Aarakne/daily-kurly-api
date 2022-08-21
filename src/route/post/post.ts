@@ -203,7 +203,7 @@ export const likePost = async (req: Request, res: Response) => {
     } else {
       // 좋아요 취소
       post.likeCount--
-      user?.likedPosts.splice(index, 1)
+      user.likedPosts.splice(index, 1)
     }
 
     await post.save()
