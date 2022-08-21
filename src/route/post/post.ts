@@ -1,4 +1,5 @@
 import type { Request, Response } from 'express'
+import { Types } from 'mongoose'
 import Post from '../../schema/post'
 import User from '../../schema/user'
 import { response, checkIfObjectId } from '../../lib/utils'
@@ -171,6 +172,44 @@ export const readPosts = async (req: Request, res: Response) => {
     const hasNext = posts.length !== 0
 
     return response(res, 200, { posts, hasNext })
+  } catch (err) {
+    console.error(err)
+    return response(res, 500)
+  }
+}
+
+export const likePost = async (req: Request, res: Response) => {
+  try {
+    const username = getUserName(req)
+    const postId = req.params.postId
+
+    checkIfObjectId(res, postId)
+
+    const post = await Post.findOne({ _id: postId, deleted: false })
+    const user = (await User.findOne({ username }))!
+
+    if (!post) {
+      console.error('잘못된 게시글을 요청했습니다.')
+      return response(res, 404)
+    }
+
+    const index = user.likedPosts
+      .map((id) => id.toString())
+      .indexOf(postId) as number
+    if (index === -1) {
+      // 좋아요
+      post.likeCount++
+      user.likedPosts.push(new Types.ObjectId(postId))
+    } else {
+      // 좋아요 취소
+      post.likeCount--
+      user?.likedPosts.splice(index, 1)
+    }
+
+    await post.save()
+    await user.save()
+
+    return response(res, 200)
   } catch (err) {
     console.error(err)
     return response(res, 500)
