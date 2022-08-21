@@ -1,4 +1,4 @@
-import { Schema, model, ObjectId } from 'mongoose'
+import { Schema, model, Types } from 'mongoose'
 
 interface post {
   writer: string
@@ -7,7 +7,7 @@ interface post {
     text: string
   }
   likeCount: number
-  usedProducts: ObjectId[]
+  usedProducts: Types.ObjectId[]
   title: string
   tags: string[]
   deleted: boolean
