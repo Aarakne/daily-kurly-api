@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express'
 import Product from '../../schema/product'
 import { response, checkIfObjectId } from '../../lib/utils'
+import { PRODUCT_KEYS } from '../../constant/route/index'
 
 export const getProductDetails = async (req: Request, res: Response) => {
   try {
@@ -16,7 +17,7 @@ export const getProductDetails = async (req: Request, res: Response) => {
 
     const relatedProducts = await Product.find({
       cat3: product.cat3,
-    }).select('_id name brand image')
+    }).select(PRODUCT_KEYS)
 
     return response(res, 200, {
       product,

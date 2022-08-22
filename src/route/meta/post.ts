@@ -5,11 +5,12 @@ import TimeCategory from '../../schema/timeCategory'
 import HardshipCategory from '../../schema/hardshipCategory'
 import Situation from '../../schema/situation'
 import { response } from '../../lib/utils'
+import { CATEGORY_KEYS } from '../../constant/route/index'
 
-export const getPostCategories = async (req: Request, res: Response) => {
+export const getPostCategories = async (_: Request, res: Response) => {
   try {
-    const category1s = await PostCategory1.find({}).select('_id tag')
-    const category2s = await PostCategory2.find({}).select('_id tag')
+    const category1s = await PostCategory1.find({}).select(CATEGORY_KEYS)
+    const category2s = await PostCategory2.find({}).select(CATEGORY_KEYS)
 
     return response(res, 200, { category1s, category2s })
   } catch (err) {
@@ -18,13 +19,13 @@ export const getPostCategories = async (req: Request, res: Response) => {
   }
 }
 
-export const getPostOptionCategories = async (req: Request, res: Response) => {
+export const getPostOptionCategories = async (_: Request, res: Response) => {
   try {
     const timeCategories = await TimeCategory.find({}).select('_id time tag')
     const hardshipCategories = await HardshipCategory.find({}).select(
       '_id hard tag'
     )
-    const situation = await Situation.find({}).select('_id tag')
+    const situation = await Situation.find({}).select(CATEGORY_KEYS)
 
     return response(res, 200, { timeCategories, hardshipCategories, situation })
   } catch (err) {
