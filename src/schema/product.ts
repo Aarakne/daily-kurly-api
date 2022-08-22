@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model, Types } from 'mongoose'
 
 interface product {
   name: string
@@ -22,6 +22,7 @@ interface product {
   gram: number
   gramPrice: number
   deleted: boolean
+  relatedProduct: Types.ObjectId
 }
 
 const productSchema = new Schema<product>(
@@ -116,6 +117,9 @@ const productSchema = new Schema<product>(
       type: Boolean,
       required: true,
       default: false,
+    },
+    relatedProduct: {
+      type: Schema.Types.ObjectId,
     },
   },
   { timestamps: true }

@@ -2,8 +2,8 @@ import type { Request, Response } from 'express'
 import User from '../../schema/user'
 import Purchase from '../../schema/purchase'
 import Product from '../../schema/product'
-import { response } from '../../lib/utils'
-import { getUserName } from '../../lib/post.helper'
+import { checkIfObjectId, response } from '../../lib/utils'
+import { getUserName } from '../../lib/auth.helper'
 import { PRODUCT_KEYS } from '../../constant/route/index'
 
 export const getMyPosts = async (req: Request, res: Response) => {
@@ -56,6 +56,7 @@ export const getLikedPosts = async (req: Request, res: Response) => {
   }
 }
 
+// unique 구매 상품
 export const getProducts = async (req: Request, res: Response) => {
   try {
     const username = getUserName(req)
@@ -76,6 +77,29 @@ export const getProducts = async (req: Request, res: Response) => {
     }).select(PRODUCT_KEYS)
 
     return response(res, 200, { products })
+  } catch (err) {
+    console.error(err)
+    return response(res, 500)
+  }
+}
+
+export const createPurchase = async (req: Request, res: Response) => {
+  try {
+    const username = getUserName(req)
+    const { products } = req.body
+
+    for (const productId of products) {
+      if (!checkIfObjectId(productId)) {
+        return response(res, 400, { status: 'invalid ObjectId' })
+      }
+    }
+
+    await Purchase.create({
+      username,
+      products,
+    })
+
+    return response(res, 201)
   } catch (err) {
     console.error(err)
     return response(res, 500)

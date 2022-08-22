@@ -22,7 +22,10 @@ vi .env
 ## 3. 서버 실행
 
 ```sh
-yarn dev
+yarn dev # 개발용
+yarn build # typescript 컴파일
+yarn start # 빌드 후 로컬에서 node로 서버 실행
+yarn serve # pm으로 실제 서버에서 실행
 ```
 
 ### 4. 정보

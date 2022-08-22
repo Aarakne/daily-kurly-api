@@ -22,8 +22,10 @@ export const makeHash = (data: string, algorithm: string = 'sha512') => {
   return crypto.createHash(algorithm).update(data).digest('hex')
 }
 
-export const checkIfObjectId = (res: Response, objectId: string) => {
+export const checkIfObjectId = (objectId: string) => {
   if (!Types.ObjectId.isValid(objectId)) {
-    return response(res, 400, { status: 'invalid ObjectId' })
+    return false
   }
+
+  return true
 }

@@ -72,3 +72,11 @@ export const verifyToken = async (
 
   next()
 }
+
+export const getUserName = (req: Request) => {
+  const { token } = req.cookies
+  const secret = process.env.JWT_SECRET || 'JWT_SECRET'
+  const { username } = jwt.verify(token, secret) as JWTtoken
+
+  return username
+}
