@@ -11,10 +11,8 @@ interface post {
   usedProducts: Types.ObjectId[]
   category1: string
   category2: string
-  situation: string
-  time: number
-  hardship: string
   tags: string[]
+  hitCount: number
   deleted: boolean
 }
 
@@ -36,6 +34,7 @@ const postSchema = new Schema<post>(
     likeCount: {
       type: Number,
       default: 0,
+      required: true,
     },
     usedProducts: {
       type: [Schema.Types.ObjectId],
@@ -51,20 +50,13 @@ const postSchema = new Schema<post>(
       type: String,
       required: true,
     },
-    situation: {
-      type: String,
-      required: true,
-    },
-    time: {
-      type: Number,
-      required: true,
-    },
-    hardship: {
-      type: String,
-      required: true,
-    },
     tags: {
       type: [],
+    },
+    hitCount: {
+      type: Number,
+      default: 0,
+      required: true,
     },
     deleted: {
       type: Boolean,
