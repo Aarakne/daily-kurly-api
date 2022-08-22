@@ -7,7 +7,9 @@ export const getProductDetails = async (req: Request, res: Response) => {
   try {
     const productId = req.params.productId
 
-    checkIfObjectId(res, productId)
+    if (!checkIfObjectId(productId)) {
+      return response(res, 400, { status: 'invalid ObjectId' })
+    }
 
     const product = await Product.findById(productId).select('-deleted')
     if (!product) {
