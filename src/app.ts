@@ -45,3 +45,12 @@ const init = () => {
 }
 
 export default init
+
+/**
+ * 1. 카테고리 전부 각각 반환하는 라우터를 만든다. + swagger를 수정한다. //
+ * 2. product 상세 api를 만들고 relatedProduct도 같이 전달한다. //
+ * 3. 구입 내역 product api를 만든다. //
+ * 4. post 스키마를 변경하고 데이터를 넣어본다.
+ * 5. post CRUD를 다시 확인한다.
+ * 로그(postId, productId, username)
+ */

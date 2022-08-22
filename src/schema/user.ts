@@ -5,6 +5,7 @@ interface user {
   password: string
   likedPosts: Types.ObjectId[]
   posts: Types.ObjectId[]
+  grade: string
 }
 
 const userSchema = new Schema<user>(
@@ -28,6 +29,11 @@ const userSchema = new Schema<user>(
       type: [Schema.Types.ObjectId],
       ref: 'Post',
       default: [],
+    },
+    grade: {
+      type: String,
+      required: true,
+      default: 'purple',
     },
   },
   { timestamps: true }

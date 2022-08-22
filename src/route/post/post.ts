@@ -6,12 +6,20 @@ import { response, checkIfObjectId } from '../../lib/utils'
 import { getImagePromises, getUserName } from '../../lib/post.helper'
 import { INFINITE_SCROLL_POST_COUNT } from '../../constant/route/post'
 
-// TODO: category 추가, populate 추가
-
 export const createPost = async (req: Request, res: Response) => {
   try {
     const username = getUserName(req)
-    const { title, content, products, tags } = req.body
+    const {
+      title,
+      text,
+      products,
+      tags,
+      category1,
+      category2,
+      situation,
+      time,
+      hardship,
+    } = req.body
     const files = req.files as Express.Multer.File[]
 
     if (!products || products.split(',').length < 1) {
@@ -28,10 +36,15 @@ export const createPost = async (req: Request, res: Response) => {
       title,
       content: {
         images: imageUrls,
-        text: content,
+        text: text ?? '',
       },
       usedProducts: products.split(','),
       tags: tags ? tags.split(',') : [],
+      category1: category1 ?? '',
+      category2: category2 ?? '',
+      situation: situation ?? '',
+      time: time ?? 0,
+      hardship: hardship ?? '',
     })
 
     const user = await User.findOne({ username })

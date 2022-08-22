@@ -2,13 +2,18 @@ import { Schema, model, Types } from 'mongoose'
 
 interface post {
   writer: string
+  title: string
   content: {
     images: string[] // S3 image url
     text: string
   }
   likeCount: number
   usedProducts: Types.ObjectId[]
-  title: string
+  category1: string
+  category2: string
+  situation: string
+  time: number
+  hardship: string
   tags: string[]
   deleted: boolean
 }
@@ -20,6 +25,10 @@ const postSchema = new Schema<post>(
       required: true,
       index: 'text',
     },
+    title: {
+      type: String,
+      required: true,
+    },
     content: {
       type: Object,
       required: true,
@@ -29,11 +38,28 @@ const postSchema = new Schema<post>(
       default: 0,
     },
     usedProducts: {
-      type: [],
+      type: [Schema.Types.ObjectId],
+      ref: 'Product',
       required: true,
       minlength: 1,
     },
-    title: {
+    category1: {
+      type: String,
+      required: true,
+    },
+    category2: {
+      type: String,
+      required: true,
+    },
+    situation: {
+      type: String,
+      required: true,
+    },
+    time: {
+      type: Number,
+      required: true,
+    },
+    hardship: {
       type: String,
       required: true,
     },

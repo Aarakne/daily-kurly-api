@@ -68,7 +68,7 @@ export const verifyUser = async (req: Request, res: Response) => {
       sameSite: 'strict',
     })
 
-    return response(res, 200)
+    return response(res, 200, { grade: user[0].grade })
   } catch (err) {
     console.error(err)
     return response(res, 500)
