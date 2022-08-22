@@ -3,7 +3,7 @@ import User from '../../schema/user'
 import Purchase from '../../schema/purchase'
 import Product from '../../schema/product'
 import { checkIfObjectId, response } from '../../lib/utils'
-import { getUserName } from '../../lib/post.helper'
+import { getUserName } from '../../lib/auth.helper'
 import { PRODUCT_KEYS } from '../../constant/route/index'
 
 export const getMyPosts = async (req: Request, res: Response) => {
@@ -89,7 +89,9 @@ export const createPurchase = async (req: Request, res: Response) => {
     const { products } = req.body
 
     for (const productId of products) {
-      checkIfObjectId(res, productId)
+      if (!checkIfObjectId(productId)) {
+        return response(res, 400, { status: 'invalid ObjectId' })
+      }
     }
 
     await Purchase.create({

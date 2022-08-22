@@ -3,23 +3,14 @@ import { Types } from 'mongoose'
 import Post from '../../schema/post'
 import User from '../../schema/user'
 import { response, checkIfObjectId } from '../../lib/utils'
-import { getImagePromises, getUserName } from '../../lib/post.helper'
+import { getUserName } from '../../lib/auth.helper'
+import { getImagePromises } from '../../lib/post.helper'
 import { INFINITE_SCROLL_POST_COUNT } from '../../constant/route/post'
 
 export const createPost = async (req: Request, res: Response) => {
   try {
     const username = getUserName(req)
-    const {
-      title,
-      text,
-      products,
-      tags,
-      category1,
-      category2,
-      situation,
-      time,
-      hardship,
-    } = req.body
+    const { title, text, products, tags, category1, category2 } = req.body
     const files = req.files as Express.Multer.File[]
 
     if (!products || products.split(',').length < 1) {
@@ -42,9 +33,6 @@ export const createPost = async (req: Request, res: Response) => {
       tags: tags ? tags.split(',') : [],
       category1: category1 ?? '',
       category2: category2 ?? '',
-      situation: situation ?? '',
-      time: time ?? 0,
-      hardship: hardship ?? '',
     })
 
     const user = await User.findOne({ username })
@@ -63,7 +51,9 @@ export const readPost = async (req: Request, res: Response) => {
     const username = getUserName(req)
     const postId = req.params.postId
 
-    checkIfObjectId(res, postId)
+    if (!checkIfObjectId(postId)) {
+      return response(res, 404, { status: 'invalid ObjectId' })
+    }
 
     const post = await Post.findOne({ _id: postId, deleted: false })
 
@@ -96,7 +86,9 @@ export const updatePost = async (req: Request, res: Response) => {
     const username = getUserName(req)
     const postId = req.params.postId
 
-    checkIfObjectId(res, postId)
+    if (!checkIfObjectId(postId)) {
+      return response(res, 404, { status: 'invalid ObjectId' })
+    }
 
     const post = await Post.findOne({
       _id: postId,
@@ -143,7 +135,9 @@ export const deletePost = async (req: Request, res: Response) => {
     const username = getUserName(req)
     const postId = req.params.postId
 
-    checkIfObjectId(res, postId)
+    if (!checkIfObjectId(postId)) {
+      return response(res, 404, { status: 'invalid ObjectId' })
+    }
 
     const post = await Post.findOne({
       _id: postId,
@@ -196,7 +190,9 @@ export const likePost = async (req: Request, res: Response) => {
     const username = getUserName(req)
     const postId = req.params.postId
 
-    checkIfObjectId(res, postId)
+    if (!checkIfObjectId(postId)) {
+      return response(res, 404, { status: 'invalid ObjectId' })
+    }
 
     const post = await Post.findOne({ _id: postId, deleted: false })
     const user = (await User.findOne({ username }))!

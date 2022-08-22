@@ -1,18 +1,8 @@
-import type { Request } from 'express'
-import jwt from 'jsonwebtoken'
-import type { JWTtoken, imagePromises } from 'routeType'
+import type { imagePromises } from 'routeType'
 import path from 'path'
 import { makeHash } from './utils'
 import { allowedExtensions } from '../constant/route/post'
 import { s3Upload } from './aws.helper'
-
-export const getUserName = (req: Request) => {
-  const { token } = req.cookies
-  const secret = process.env.JWT_SECRET || 'JWT_SECRET'
-  const { username } = jwt.verify(token, secret) as JWTtoken
-
-  return username
-}
 
 export const getImagePromises = (
   files: Express.Multer.File[],
