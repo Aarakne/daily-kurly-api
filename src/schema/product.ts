@@ -1,10 +1,10 @@
-import { Schema, model, Types } from 'mongoose'
+import { Schema, model } from 'mongoose'
 
 interface product {
   name: string
-  cat1: Types.ObjectId
-  cat2: Types.ObjectId
-  cat3: Types.ObjectId
+  cat1: string
+  cat2: string
+  cat3: string
   brand: string
   image: string
   packingType: string
@@ -21,6 +21,7 @@ interface product {
   avgSold: number
   gram: number
   gramPrice: number
+  deleted: boolean
 }
 
 const productSchema = new Schema<product>(
@@ -30,17 +31,17 @@ const productSchema = new Schema<product>(
       required: true,
     },
     cat1: {
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: 'ProductCategory1',
       required: true,
     },
     cat2: {
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: 'ProductCategory2',
       required: true,
     },
     cat3: {
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: 'ProductCategory3',
       required: true,
     },
@@ -110,6 +111,11 @@ const productSchema = new Schema<product>(
     gramPrice: {
       type: Number,
       required: true,
+    },
+    deleted: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
   },
   { timestamps: true }

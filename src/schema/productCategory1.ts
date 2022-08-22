@@ -1,6 +1,6 @@
 import { model } from 'mongoose'
 import { categorySchema } from './category'
 
-const productCategory1 = model('productCategory1', categorySchema)
+const ProductCategory1 = model('ProductCategory1', categorySchema)
 
-export default productCategory1
+export default ProductCategory1
