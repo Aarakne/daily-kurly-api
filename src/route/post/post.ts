@@ -160,7 +160,7 @@ export const readPosts = async (req: Request, res: Response) => {
 
     if (isNaN(page)) {
       console.error('잘못된 page입니다.')
-      return response(res, 400)
+      return response(res, 404)
     }
 
     const posts = await Post.find({ deleted: false })
