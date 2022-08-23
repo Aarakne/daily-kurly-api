@@ -120,6 +120,7 @@ const productSchema = new Schema<product>(
     },
     relatedProduct: {
       type: Schema.Types.ObjectId,
+      ref: 'Product',
     },
   },
   { timestamps: true }
