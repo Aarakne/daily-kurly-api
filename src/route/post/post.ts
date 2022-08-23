@@ -6,6 +6,7 @@ import { response, checkIfObjectId } from '../../lib/utils'
 import { getUserName } from '../../lib/auth.helper'
 import { getImagePromises } from '../../lib/post.helper'
 import { INFINITE_SCROLL_POST_COUNT } from '../../constant/route/post'
+import { PRODUCT_KEYS } from '../../constant/route'
 
 export const createPost = async (req: Request, res: Response) => {
   try {
@@ -55,7 +56,14 @@ export const readPost = async (req: Request, res: Response) => {
       return response(res, 404, { status: 'invalid ObjectId' })
     }
 
-    const post = await Post.findOne({ _id: postId, deleted: false })
+    const post = await Post.findOne({ _id: postId, deleted: false }).populate({
+      path: 'usedProducts',
+      select: `${PRODUCT_KEYS} relatedProduct`,
+      populate: {
+        path: 'relatedProduct',
+        select: PRODUCT_KEYS,
+      },
+    })
 
     if (!post) {
       console.error('잘못된 게시글을 요청했습니다.')
@@ -73,6 +81,8 @@ export const readPost = async (req: Request, res: Response) => {
       tags: post.tags,
       products: post.usedProducts,
       likeCount: post.likeCount,
+      category1: post.category1,
+      category2: post.category2,
       liked,
     })
   } catch (err) {
@@ -178,7 +188,7 @@ export const readPosts = async (req: Request, res: Response) => {
       .skip((page - 1) * INFINITE_SCROLL_POST_COUNT)
       .limit(INFINITE_SCROLL_POST_COUNT)
 
-    const hasNext = posts.length !== 0
+    const hasNext = !(posts.length < INFINITE_SCROLL_POST_COUNT)
 
     return response(res, 200, { posts, hasNext })
   } catch (err) {
