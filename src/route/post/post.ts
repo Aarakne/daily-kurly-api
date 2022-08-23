@@ -101,7 +101,7 @@ export const updatePost = async (req: Request, res: Response) => {
       return response(res, 404)
     }
 
-    const { title, content, products, tags } = req.body
+    const { title, text, products, tags, category1, category2 } = req.body
     const files = req.files as Express.Multer.File[]
 
     if (!products || products.split(',').length < 1) {
@@ -116,10 +116,12 @@ export const updatePost = async (req: Request, res: Response) => {
     post.title = title
     post.content = {
       images: imageUrls,
-      text: content,
+      text,
     }
     post.usedProducts = products.split(',')
     post.tags = tags ? tags.split(',') : []
+    post.category1 = category1 ?? ''
+    post.category2 = category2 ?? ''
 
     await post.save()
 
