@@ -38,7 +38,7 @@ export const getLikedPosts = async (req: Request, res: Response) => {
     const user = await User.findOne({ username })
       .populate({
         path: 'likedPosts',
-        select: '_id content',
+        select: '_id content title',
         match: { deleted: false },
         options: { sort: { createdAt: -1 } },
       })
