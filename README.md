@@ -30,6 +30,6 @@ yarn serve # pm으로 실제 서버에서 실행
 
 ### 4. 정보
 
-DB 구상도: TODO(사진 추가)
+[DB 스키마 및 시스템 구상도](https://drive.google.com/file/d/1y9j3zj8E3-uovP9FTtJfw-jOVWg0zlE6/view?usp=sharing)
 
-api 명세: https://app.swaggerhub.com/apis-docs/mochang2/daily-kurly/1.0.0
+[api 명세](https://app.swaggerhub.com/apis-docs/mochang2/daily-kurly/1.0.0)
