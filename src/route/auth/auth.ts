@@ -64,8 +64,8 @@ export const verifyUser = async (req: Request, res: Response) => {
 
     res.cookie('token', token, {
       httpOnly: true,
-      domain: 'localhost', // TODO: 변경해야 함
-      sameSite: 'strict',
+      // domain: 'localhost', // TODO: 변경해야 함
+      // sameSite: 'strict',
     })
 
     return response(res, 200, { grade: user[0].grade })

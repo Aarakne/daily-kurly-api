@@ -175,14 +175,26 @@ export const deletePost = async (req: Request, res: Response) => {
 
 export const readPosts = async (req: Request, res: Response) => {
   try {
-    const page = parseInt(req.params.page)
+    const page = parseInt(req.query.page as string)
+    const cat2 = req.query.cat2 as string[] | undefined
 
     if (isNaN(page)) {
-      console.error('잘못된 page입니다.')
+      console.error('잘못된 page 요청입니다.')
       return response(res, 404)
     }
 
-    const posts = await Post.find({ deleted: false })
+    const category2Option = cat2
+      ? {
+          category2: {
+            $in: cat2,
+          },
+        }
+      : {} // 필터링 조건이 없다면
+
+    const posts = await Post.find({
+      deleted: false,
+      ...category2Option,
+    })
       .sort('-createdAt')
       .select('writer content likeCount title')
       .skip((page - 1) * INFINITE_SCROLL_POST_COUNT)
