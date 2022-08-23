@@ -1,6 +1,16 @@
-import { model } from 'mongoose'
-import { categorySchema } from './category'
+import { Schema, model } from 'mongoose'
 
-const PostCategory2 = model('PostCategory2', categorySchema)
+interface postCategory2 {
+  tag: string
+}
+
+const postCategory2Schema = new Schema<postCategory2>({
+  tag: {
+    type: String,
+    required: true,
+  },
+})
+
+const PostCategory2 = model('PostCategory2', postCategory2Schema)
 
 export default PostCategory2

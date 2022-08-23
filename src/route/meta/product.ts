@@ -3,15 +3,23 @@ import ProductCategory1 from '../../schema/productCategory1'
 import ProductCategory2 from '../../schema/productCategory2'
 import ProductCategory3 from '../../schema/productCategory3'
 import { response } from '../../lib/utils'
-import { CATEGORY_KEYS } from '../../constant/route/index'
 
-export const getProductCategories = async (req: Request, res: Response) => {
+export const getProductCategories = async (_: Request, res: Response) => {
   try {
-    const category1s = await ProductCategory1.find({}).select(CATEGORY_KEYS)
-    const category2s = await ProductCategory2.find({}).select(CATEGORY_KEYS)
-    const category3s = await ProductCategory3.find({}).select(CATEGORY_KEYS)
+    const categories = await ProductCategory1.find({})
+      .select('tag category2 -_id')
+      .populate({
+        path: 'category2',
+        select: 'tag -_id',
+        model: ProductCategory2,
+        populate: {
+          path: 'category3',
+          select: 'tag -_id',
+          model: ProductCategory3,
+        },
+      })
 
-    return response(res, 200, { category1s, category2s, category3s })
+    return response(res, 200, { categories })
   } catch (err) {
     console.error(err)
     return response(res, 500)
