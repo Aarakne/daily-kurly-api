@@ -18,7 +18,7 @@ export const s3Upload = (Key: string, Body: AWS.S3.Body) => {
         Bucket: process.env.AWS_S3_BUCKET_NAME!,
         Key,
         Body,
-        ACL: 'public-read', // TODO: 배포 전 확인하기
+        ACL: 'public-read',
       },
       (err, data) => {
         if (err) {
