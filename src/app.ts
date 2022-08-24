@@ -12,7 +12,7 @@ import { CORS_ALLOWED } from './constant/index'
 const init = () => {
   const app = express()
 
-  app.use(cors({ credentials: true }))
+  app.use(cors({ origin: CORS_ALLOWED, credentials: true }))
   app.use(helmet({ contentSecurityPolicy: false }))
   app.use(express.json())
   app.use(express.urlencoded({ extended: false }))
