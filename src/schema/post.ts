@@ -14,6 +14,7 @@ interface post {
   tags: string[]
   hitCount: number
   deleted: boolean
+  createdAt: string
 }
 
 const postSchema = new Schema<post>(
