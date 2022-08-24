@@ -58,7 +58,7 @@ export const readPost = async (req: Request, res: Response) => {
 
     const post = await Post.findOne({ _id: postId, deleted: false }).populate({
       path: 'usedProducts',
-      select: `${PRODUCT_KEYS} relatedProduct`,
+      select: PRODUCT_KEYS,
       populate: {
         path: 'relatedProduct',
         select: PRODUCT_KEYS,
@@ -84,6 +84,7 @@ export const readPost = async (req: Request, res: Response) => {
       category1: post.category1,
       category2: post.category2,
       liked,
+      createdAt: post.createdAt,
     })
   } catch (err) {
     console.error(err)
